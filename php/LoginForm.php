@@ -1,4 +1,5 @@
 <?php
+
 // Database connection settings
 $servername = "localhost";
 $username = "root";
@@ -11,6 +12,20 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check for connection errors
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
+}
+
+// Create the login table if it doesn't exist
+$table_creation_query = "
+    CREATE TABLE IF NOT EXISTS login (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL
+    );
+";
+
+// Execute the query to create the table
+if ($conn->query($table_creation_query) === FALSE) {
+    echo "Error creating table: " . $conn->error;
 }
 
 // Check if form data has been submitted
@@ -36,22 +51,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Verify the entered password against the stored hashed password
             if (password_verify($password, $stored_password)) {
                 // Successful login, redirect to a protected page (e.g., dashboard)
-                header("Location: ../ready.html");
+                header("Location: ready.html");
                 exit();
             } else {
                 // Invalid password
-                echo "<p>Invalid username or password.</p>";
+                echo "<div class=\"msg-box\"><p>Invalid username or password.</p></div>";
             }
         } else {
             // Username not found
-            echo "<p>Invalid username or password.</p>";
+                echo "<div class=\"msg-box\"><p>Invalid username or password.</p></div>";
         }
 
         // Close the statement
         $stmt->close();
     } else {
         // Display an error if the username or password is empty
-        echo "<p>Please enter both username and password.</p>";
+        echo "<div class=\"msg-box\"><p>Username or password is empty</p></div>";
     }
 }
 

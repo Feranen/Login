@@ -125,3 +125,15 @@ body {
 .register-link p a:hover{
     text-decoration: underline;
 }
+
+.msg-box {
+    text-align: center;
+    border: 1px solid #f76f7d;
+    border-radius: 5px;
+    height: 50px;
+    color: #ff374b;
+}
+
+.msg-box > * {
+    margin-top: 10px;
+}

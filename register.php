@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="php/RegisterForm.php" method="post">
+        <form action="" method="post">
             <h1>Register</h1>
             <div class="input-box">
                 <input type="text" placeholder="Username" name="username" id="Username1" required>
@@ -25,10 +25,12 @@
             </div>
             <button type="submit" class="btn" id="btn">Register</button>
             <div class="register-link">
-                <p>Already haave an account? <a href="index.html">Login</a></p>
+                <p>Already haave an account? <a href="index.php">Login</a></p>
             </div>
         </form>
+        <?php include "php/RegisterForm.php"?>
     </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>

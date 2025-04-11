@@ -11,6 +11,8 @@ if ($conn->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    try {
+    
     // Getting the username and password
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -25,9 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $conn->prepare("INSERT INTO login (username, password) VALUES (?, ?)");
         $stmt->bind_param("ss", $username, $hashed_password);
 
+
         // Execute the query
         if ($stmt->execute()) {
-            header("Location: ../index.html");
+            header("Location: index.php");
             exit();
         } else {
             echo "Error: " . $stmt->error;
@@ -38,7 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Close the statement
         $stmt->close();
     } else {
-        echo "All fields are required.";
+        echo "<div class=\"msg-box\"><p>All fields is required</p></div>";
+    }
+    } catch (Exception $e) {
+        echo "<div class=\"msg-box\"><p>Username must be unique.</p></div>";
     }
 }
 
